@@ -11,11 +11,20 @@
     "build:frontend": "vite build",
     "build:backend": "tsc -p tsconfig.server.json",
     "start": "node dist/server/index.js",
+    "preview": "vite preview",
     "test": "jest",
+    "test:watch": "jest --watch",
     "lint": "eslint . --ext .ts,.tsx",
     "lint:fix": "eslint . --ext .ts,.tsx --fix",
     "type-check": "tsc --noEmit",
-    "setup": "npm install && pip install -r requirements.txt"
+    "setup": "npm install && pip install -r requirements.txt",
+    "oregon:setup": "bash setup-oregon-mcp.sh",
+    "oregon:monitor": "tsx src/server/mcp/oregon-monitoring.service.ts",
+    "oregon:test": "python test-python.py",
+    "demo:serve": "python -m http.server 8000",
+    "demo:build": "mkdir -p docs && cp enhanced-demo.html docs/index.html && cp test-components.html docs/components.html && cp index.html docs/landing.html",
+    "security:audit": "npm audit --audit-level moderate",
+    "security:fix": "npm audit fix"
   },
   "keywords": [
     "planning",

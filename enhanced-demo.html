@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CiviAI Enhanced - Interactive Demo</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .forest-50 { background-color: #f0f9f4; }
+        .forest-100 { background-color: #dcf2e3; }
+        .forest-600 { background-color: #3d9b63; }
+        .forest-700 { background-color: #2f7c4f; }
+        .animate-pulse { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: .5; }
+        }
+        .animate-bounce { animation: bounce 1s infinite; }
+        @keyframes bounce {
+            0%, 20%, 53%, 80%, 100% { transform: translate3d(0,0,0); }
+            40%, 43% { transform: translate3d(0,-30px,0); }
+            70% { transform: translate3d(0,-15px,0); }
+            90% { transform: translate3d(0,-4px,0); }
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        // Enhanced CiviAI Demo Component
+        function CiviAIEnhancedDemo() {
+            const [activeTab, setActiveTab] = React.useState('dashboard');
+            const [isLoading, setIsLoading] = React.useState(false);
+            const [notification, setNotification] = React.useState(null);
+            const [oregonData, setOregonData] = React.useState({
+                lastUpdate: new Date().toLocaleString(),
+                planningGoals: 19,
+                activeUpdates: 3,
+                complianceRate: 92,
+                pendingReviews: 7
+            });
+
+            // Simulate Oregon MCP data updates
+            const simulateOregonUpdate = () => {
+                setIsLoading(true);
+                setTimeout(() => {
+                    setOregonData(prev => ({
+                        ...prev,
+                        lastUpdate: new Date().toLocaleString(),
+                        activeUpdates: prev.activeUpdates + 1,
+                        complianceRate: Math.min(100, prev.complianceRate + 1)
+                    }));
+                    setIsLoading(false);
+                    setNotification({
+                        type: 'success',
+                        message: 'Oregon DLCD data updated successfully!'
+                    });
+                    setTimeout(() => setNotification(null), 3000);
+                }, 2000);
+            };
+
+            // Simulate document analysis
+            const simulateDocumentAnalysis = () => {
+                setIsLoading(true);
+                setTimeout(() => {
+                    setIsLoading(false);
+                    setNotification({
+                        type: 'info',
+                        message: 'Document analysis complete. 3 compliance issues found.'
+                    });
+                    setTimeout(() => setNotification(null), 3000);
+                }, 1500);
+            };
+
+            return (
+                <div className="min-h-screen bg-gradient-to-br from-forest-50 to-forest-100">
+                    {/* Header */}
+                    <header className="bg-white shadow-sm border-b border-gray-200">
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                            <div className="flex justify-between items-center py-4">
+                                <div className="flex items-center space-x-3">
+                                    <div className="w-8 h-8 bg-forest-600 rounded-lg flex items-center justify-center">
+                                        <span className="text-white font-bold text-sm">C</span>
+                                    </div>
+                                    <h1 className="text-xl font-bold text-gray-900">CiviAI Enhanced</h1>
+                                </div>
+                                <div className="flex items-center space-x-4">
+                                    <span className="text-sm text-gray-500">VPN: 208.115.233.120</span>
+                                    <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </header>
+
+                    {/* Navigation */}
+                    <nav className="bg-white shadow-sm border-b border-gray-200">
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                            <div className="flex space-x-8 py-4">
+                                {[
+                                    { id: 'dashboard', label: 'Dashboard', icon: '📊' },
+                                    { id: 'oregon', label: 'Oregon MCP', icon: '🌲' },
+                                    { id: 'documents', label: 'Document Analysis', icon: '📄' },
+                                    { id: 'chatbot', label: 'AI Assistant', icon: '🤖' },
+                                    { id: 'settings', label: 'Settings', icon: '⚙️' }
+                                ].map(tab => (
+                                    <button
+                                        key={tab.id}
+                                        onClick={() => setActiveTab(tab.id)}
+                                        className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-colors ${
+                                            activeTab === tab.id 
+                                                ? 'bg-forest-600 text-white' 
+                                                : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+                                        }`}
+                                    >
+                                        <span>{tab.icon}</span>
+                                        <span>{tab.label}</span>
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+                    </nav>
+
+                    {/* Notification */}
+                    {notification && (
+                        <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4`}>
+                            <div className={`p-4 rounded-lg ${
+                                notification.type === 'success' ? 'bg-green-100 text-green-800' :
+                                notification.type === 'info' ? 'bg-blue-100 text-blue-800' :
+                                'bg-red-100 text-red-800'
+                            }`}>
+                                {notification.message}
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Main Content */}
+                    <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                        {activeTab === 'dashboard' && (
+                            <div>
+                                <h2 className="text-2xl font-bold text-gray-900 mb-6">Dashboard Overview</h2>
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                                    <DashboardCard 
+                                        title="Total Applications"
+                                        value="24"
+                                        description="All time submissions"
+                                        icon="📄"
+                                        trend="+12%"
+                                    />
+                                    <DashboardCard 
+                                        title="Pending Review"
+                                        value="7"
+                                        description="Awaiting staff decision"
+                                        icon="⏳"
+                                        trend="+3"
+                                    />
+                                    <DashboardCard 
+                                        title="Completion Rate"
+                                        value="92%"
+                                        description="Applications without missing info"
+                                        icon="📈"
+                                        trend="+5%"
+                                    />
+                                    <DashboardCard 
+                                        title="Missing Items"
+                                        value="3"
+                                        description="Across 2 applications"
+                                        icon="⚠️"
+                                        trend="-2"
+                                    />
+                                </div>
+                                
+                                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                                    <div className="bg-white p-6 rounded-lg shadow-sm">
+                                        <h3 className="text-lg font-semibold text-gray-900 mb-4">Recent Activity</h3>
+                                        <div className="space-y-3">
+                                            {[
+                                                { time: '2 min ago', action: 'Document uploaded', user: 'John Smith' },
+                                                { time: '5 min ago', action: 'Application submitted', user: 'Sarah Johnson' },
+                                                { time: '12 min ago', action: 'Review completed', user: 'Mike Wilson' },
+                                                { time: '1 hour ago', action: 'Oregon MCP data updated', user: 'System' }
+                                            ].map((item, index) => (
+                                                <div key={index} className="flex items-center justify-between py-2 border-b border-gray-100">
+                                                    <div>
+                                                        <p className="text-sm font-medium text-gray-900">{item.action}</p>
+                                                        <p className="text-xs text-gray-500">by {item.user}</p>
+                                                    </div>
+                                                    <span className="text-xs text-gray-400">{item.time}</span>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                    
+                                    <div className="bg-white p-6 rounded-lg shadow-sm">
+                                        <h3 className="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h3>
+                                        <div className="space-y-3">
+                                            <button 
+                                                onClick={simulateDocumentAnalysis}
+                                                disabled={isLoading}
+                                                className="w-full text-left p-3 rounded-lg border border-gray-200 hover:border-forest-600 hover:bg-forest-50 transition-colors"
+                                            >
+                                                <div className="flex items-center justify-between">
+                                                    <div>
+                                                        <p className="font-medium text-gray-900">Analyze Document</p>
+                                                        <p className="text-sm text-gray-500">AI-powered compliance check</p>
+                                                    </div>
+                                                    {isLoading ? <span className="animate-spin">⏳</span> : <span>→</span>}
+                                                </div>
+                                            </button>
+                                            
+                                            <button 
+                                                onClick={simulateOregonUpdate}
+                                                disabled={isLoading}
+                                                className="w-full text-left p-3 rounded-lg border border-gray-200 hover:border-forest-600 hover:bg-forest-50 transition-colors"
+                                            >
+                                                <div className="flex items-center justify-between">
+                                                    <div>
+                                                        <p className="font-medium text-gray-900">Update Oregon Data</p>
+                                                        <p className="text-sm text-gray-500">Fetch latest DLCD updates</p>
+                                                    </div>
+                                                    {isLoading ? <span className="animate-spin">⏳</span> : <span>→</span>}
+                                                </div>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        {activeTab === 'oregon' && (
+                            <div>
+                                <div className="flex items-center justify-between mb-6">
+                                    <h2 className="text-2xl font-bold text-gray-900">Oregon MCP Integration</h2>
+                                    <button 
+                                        onClick={simulateOregonUpdate}
+                                        disabled={isLoading}
+                                        className="bg-forest-600 text-white px-4 py-2 rounded-lg hover:bg-forest-700 transition-colors disabled:opacity-50"
+                                    >
+                                        {isLoading ? 'Updating...' : 'Refresh Data'}
+                                    </button>
+                                </div>
+                                
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                                    <DashboardCard 
+                                        title="Planning Goals"
+                                        value={oregonData.planningGoals}
+                                        description="Oregon statewide goals"
+                                        icon="🎯"
+                                    />
+                                    <DashboardCard 
+                                        title="Active Updates"
+                                        value={oregonData.activeUpdates}
+                                        description="Recent DLCD changes"
+                                        icon="🔄"
+                                    />
+                                    <DashboardCard 
+                                        title="Compliance Rate"
+                                        value={`${oregonData.complianceRate}%`}
+                                        description="Current compliance"
+                                        icon="✅"
+                                    />
+                                    <DashboardCard 
+                                        title="Pending Reviews"
+                                        value={oregonData.pendingReviews}
+                                        description="Awaiting approval"
+                                        icon="📋"
+                                    />
+                                </div>
+                                
+                                <div className="bg-white p-6 rounded-lg shadow-sm">
+                                    <h3 className="text-lg font-semibold text-gray-900 mb-4">Latest Oregon Updates</h3>
+                                    <div className="space-y-3">
+                                        {[
+                                            { date: '2024-01-15', title: 'Comprehensive Plan Update', status: 'Pending Review', priority: 'High' },
+                                            { date: '2024-01-14', title: 'Zoning Ordinance Amendment', status: 'Approved', priority: 'Medium' },
+                                            { date: '2024-01-13', title: 'Land Use Application', status: 'Under Review', priority: 'High' },
+                                            { date: '2024-01-12', title: 'Environmental Assessment', status: 'Completed', priority: 'Low' }
+                                        ].map((item, index) => (
+                                            <div key={index} className="flex items-center justify-between p-3 border border-gray-200 rounded-lg">
+                                                <div>
+                                                    <p className="font-medium text-gray-900">{item.title}</p>
+                                                    <p className="text-sm text-gray-500">{item.date}</p>
+                                                </div>
+                                                <div className="flex items-center space-x-3">
+                                                    <span className={`px-2 py-1 rounded text-xs ${
+                                                        item.priority === 'High' ? 'bg-red-100 text-red-800' :
+                                                        item.priority === 'Medium' ? 'bg-yellow-100 text-yellow-800' :
+                                                        'bg-green-100 text-green-800'
+                                                    }`}>
+                                                        {item.priority}
+                                                    </span>
+                                                    <span className={`px-2 py-1 rounded text-xs ${
+                                                        item.status === 'Approved' ? 'bg-green-100 text-green-800' :
+                                                        item.status === 'Pending Review' ? 'bg-yellow-100 text-yellow-800' :
+                                                        item.status === 'Under Review' ? 'bg-blue-100 text-blue-800' :
+                                                        'bg-gray-100 text-gray-800'
+                                                    }`}>
+                                                        {item.status}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        {activeTab === 'documents' && (
+                            <div>
+                                <h2 className="text-2xl font-bold text-gray-900 mb-6">Document Analysis</h2>
+                                <div className="bg-white p-6 rounded-lg shadow-sm">
+                                    <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
+                                        <div className="text-4xl mb-4">📄</div>
+                                        <h3 className="text-lg font-medium text-gray-900 mb-2">Upload Document for Analysis</h3>
+                                        <p className="text-gray-500 mb-4">Drag and drop your planning document here or click to browse</p>
+                                        <button 
+                                            onClick={simulateDocumentAnalysis}
+                                            disabled={isLoading}
+                                            className="bg-forest-600 text-white px-6 py-3 rounded-lg hover:bg-forest-700 transition-colors disabled:opacity-50"
+                                        >
+                                            {isLoading ? 'Analyzing...' : 'Analyze Document'}
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        {activeTab === 'chatbot' && (
+                            <div>
+                                <h2 className="text-2xl font-bold text-gray-900 mb-6">AI Assistant</h2>
+                                <div className="bg-white p-6 rounded-lg shadow-sm">
+                                    <div className="h-96 border border-gray-200 rounded-lg p-4">
+                                        <div className="h-full flex flex-col">
+                                            <div className="flex-1 overflow-y-auto mb-4 space-y-3">
+                                                <div className="flex justify-start">
+                                                    <div className="bg-gray-100 p-3 rounded-lg max-w-xs">
+                                                        <p className="text-sm">Hello! I'm your CiviAI assistant. How can I help you with planning and permitting today?</p>
+                                                    </div>
+                                                </div>
+                                                <div className="flex justify-end">
+                                                    <div className="bg-forest-600 text-white p-3 rounded-lg max-w-xs">
+                                                        <p className="text-sm">What are the current Oregon planning goals?</p>
+                                                    </div>
+                                                </div>
+                                                <div className="flex justify-start">
+                                                    <div className="bg-gray-100 p-3 rounded-lg max-w-xs">
+                                                        <p className="text-sm">Oregon has 19 statewide planning goals covering land use, housing, transportation, and more. Would you like me to show you the specific goals relevant to your project?</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="flex space-x-2">
+                                                <input 
+                                                    type="text" 
+                                                    placeholder="Type your message..." 
+                                                    className="flex-1 border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-forest-600"
+                                                />
+                                                <button className="bg-forest-600 text-white px-4 py-2 rounded-lg hover:bg-forest-700 transition-colors">
+                                                    Send
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        {activeTab === 'settings' && (
+                            <div>
+                                <h2 className="text-2xl font-bold text-gray-900 mb-6">Settings</h2>
+                                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                                    <div className="bg-white p-6 rounded-lg shadow-sm">
+                                        <h3 className="text-lg font-semibold text-gray-900 mb-4">Oregon MCP Configuration</h3>
+                                        <div className="space-y-4">
+                                            <div>
+                                                <label className="block text-sm font-medium text-gray-700 mb-2">Update Frequency</label>
+                                                <select className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-forest-600">
+                                                    <option>Every 15 minutes</option>
+                                                    <option>Every hour</option>
+                                                    <option>Every 6 hours</option>
+                                                    <option>Daily</option>
+                                                </select>
+                                            </div>
+                                            <div>
+                                                <label className="block text-sm font-medium text-gray-700 mb-2">Notification Settings</label>
+                                                <div className="space-y-2">
+                                                    <label className="flex items-center">
+                                                        <input type="checkbox" className="mr-2" defaultChecked />
+                                                        <span className="text-sm">Email notifications</span>
+                                                    </label>
+                                                    <label className="flex items-center">
+                                                        <input type="checkbox" className="mr-2" defaultChecked />
+                                                        <span className="text-sm">In-app notifications</span>
+                                                    </label>
+                                                    <label className="flex items-center">
+                                                        <input type="checkbox" className="mr-2" />
+                                                        <span className="text-sm">SMS alerts</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div className="bg-white p-6 rounded-lg shadow-sm">
+                                        <h3 className="text-lg font-semibold text-gray-900 mb-4">System Information</h3>
+                                        <div className="space-y-3">
+                                            <div className="flex justify-between">
+                                                <span className="text-sm text-gray-600">Version:</span>
+                                                <span className="text-sm font-medium">1.0.0</span>
+                                            </div>
+                                            <div className="flex justify-between">
+                                                <span className="text-sm text-gray-600">Last Update:</span>
+                                                <span className="text-sm font-medium">{oregonData.lastUpdate}</span>
+                                            </div>
+                                            <div className="flex justify-between">
+                                                <span className="text-sm text-gray-600">VPN Status:</span>
+                                                <span className="text-sm font-medium text-green-600">Connected</span>
+                                            </div>
+                                            <div className="flex justify-between">
+                                                <span className="text-sm text-gray-600">Oregon MCP:</span>
+                                                <span className="text-sm font-medium text-green-600">Active</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+                    </main>
+                </div>
+            );
+        }
+
+        // Dashboard Card Component
+        function DashboardCard({ title, value, description, icon, trend }) {
+            return (
+                <div className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+                    <div className="flex items-center justify-between mb-4">
+                        <h3 className="text-sm font-medium text-gray-600">{title}</h3>
+                        <span className="text-2xl">{icon}</span>
+                    </div>
+                    <div className="text-2xl font-bold text-gray-900 mb-1">{value}</div>
+                    <div className="flex items-center justify-between">
+                        <p className="text-xs text-gray-500">{description}</p>
+                        {trend && (
+                            <span className={`text-xs ${
+                                trend.startsWith('+') ? 'text-green-600' : 'text-red-600'
+                            }`}>
+                                {trend}
+                            </span>
+                        )}
+                    </div>
+                </div>
+            );
+        }
+
+        ReactDOM.render(<CiviAIEnhancedDemo />, document.getElementById('root'));
+    </script>
+</body>
+</html> 

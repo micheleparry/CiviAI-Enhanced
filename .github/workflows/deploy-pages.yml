@@ -1,0 +1,85 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+        
+    - name: Install dependencies
+      run: npm install
+      
+    - name: Build demos
+      run: |
+        # Copy HTML demos to docs folder for GitHub Pages
+        mkdir -p docs
+        cp oregon-mcp-demo.html docs/index.html
+        cp test-components.html docs/components.html
+        cp index.html docs/landing.html
+        
+        # Create a demo index page
+        echo '<!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>CiviAI Enhanced - Live Demos</title>
+            <script src="https://cdn.tailwindcss.com"></script>
+            <style>
+                .forest-50 { background-color: #f0f9f4; }
+                .forest-100 { background-color: #dcf2e3; }
+                .forest-600 { background-color: #3d9b63; }
+                .forest-700 { background-color: #2f7c4f; }
+            </style>
+        </head>
+        <body class="bg-forest-50">
+            <div class="max-w-4xl mx-auto px-4 py-8">
+                <h1 class="text-3xl font-bold text-gray-900 mb-8 text-center">
+                    CiviAI Enhanced - Live Demos
+                </h1>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <a href="index.html" class="block bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+                        <h2 class="text-xl font-semibold text-gray-900 mb-3">Oregon MCP Dashboard</h2>
+                        <p class="text-gray-600 mb-4">Interactive Oregon planning data dashboard with real-time monitoring</p>
+                        <span class="inline-block bg-forest-600 text-white px-4 py-2 rounded text-sm">View Demo →</span>
+                    </a>
+                    
+                    <a href="components.html" class="block bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+                        <h2 class="text-xl font-semibold text-gray-900 mb-3">Component Testing</h2>
+                        <p class="text-gray-600 mb-4">Test React components and UI elements</p>
+                        <span class="inline-block bg-forest-600 text-white px-4 py-2 rounded text-sm">View Demo →</span>
+                    </a>
+                    
+                    <a href="landing.html" class="block bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+                        <h2 class="text-xl font-semibold text-gray-900 mb-3">Landing Page</h2>
+                        <p class="text-gray-600 mb-4">Main application landing page</p>
+                        <span class="inline-block bg-forest-600 text-white px-4 py-2 rounded text-sm">View Demo →</span>
+                    </a>
+                </div>
+                
+                <div class="mt-8 text-center text-gray-600">
+                    <p>Powered by CiviAI Enhanced - AI-Powered Planning & Permitting Management</p>
+                </div>
+            </div>
+        </body>
+        </html>' > docs/demos.html
+        
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      if: github.ref == 'refs/heads/master'
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./docs 

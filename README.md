@@ -1,269 +1,263 @@
-# CiviAI Enhanced - AI-Powered Planning & Permitting Management
+# CiviAI Enhanced 🌲
 
-**Version:** 2.0.0  
-**Author:** Manus AI  
-**Date:** January 2025
+**AI-Powered Planning & Permitting Management for Rural Communities with Oregon MCP Integration**
 
-## 🚀 Project Overview
+[![CI/CD](https://github.com/micheleparry/CiviAI-Enhanced/workflows/CI/CD%20Pipeline/badge.svg)](https://github.com/micheleparry/CiviAI-Enhanced/actions)
+[![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Live%20Demo-blue)](https://micheleparry.github.io/CiviAI-Enhanced/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-CiviAI Enhanced is a revolutionary AI-powered planning and permitting solution specifically designed for rural communities. This platform combines advanced document analysis, intelligent missing information detection, conversational AI assistance, and Model Context Protocol (MCP) integration to create a comprehensive solution that addresses the unique challenges facing rural planning departments.
+## 🚀 Live Demos
+
+- **[Interactive Demo](https://micheleparry.github.io/CiviAI-Enhanced/)** - Full CiviAI Enhanced experience
+- **[Oregon MCP Dashboard](https://micheleparry.github.io/CiviAI-Enhanced/index.html)** - Real-time Oregon planning data
+- **[Component Testing](https://micheleparry.github.io/CiviAI-Enhanced/components.html)** - UI component showcase
+- **[Landing Page](https://micheleparry.github.io/CiviAI-Enhanced/landing.html)** - Main application landing
+
+## 📋 Overview
+
+CiviAI Enhanced is a comprehensive AI-powered platform designed specifically for rural communities to manage planning and permitting processes. The system integrates with Oregon's Model Context Protocol (MCP) to provide real-time access to statewide planning goals, DLCD updates, and compliance monitoring.
 
 ### 🌟 Key Features
 
-- **Advanced Document Analysis**: AI-powered analysis of planning documents with compliance scoring
-- **Missing Information Detection**: Intelligent identification of gaps in applications with specific guidance
-- **Conversational AI Assistant**: 24/7 support for citizens and planning staff
-- **Real-time Compliance Monitoring**: Continuous analysis against current regulations
-- **Rural Community Focus**: Designed specifically for small communities with limited resources
-- **Cloud-First Architecture**: No local server infrastructure required
+- **🤖 AI-Powered Document Analysis** - Intelligent compliance checking and missing information detection
+- **🌲 Oregon MCP Integration** - Real-time access to Oregon DLCD planning data
+- **📊 Interactive Dashboard** - Comprehensive overview of applications and compliance status
+- **💬 Conversational AI Assistant** - 24/7 support for citizens and planning staff
+- **🔔 Automated Notifications** - Real-time alerts for updates and compliance issues
+- **🔐 VPN Integration** - Secure access to government resources
+- **📱 Responsive Design** - Works on desktop, tablet, and mobile devices
 
-### 🏗️ Architecture
+## 🏗️ Architecture
 
-- **Frontend**: React 18 + TypeScript + Tailwind CSS + shadcn/ui
-- **Backend**: Node.js + Express + TypeScript
-- **AI Processing**: Python with NLP and document analysis
-- **Database**: PostgreSQL (configurable for different environments)
-- **Deployment**: Replit-ready with cloud-first design
+```
+CiviAI Enhanced/
+├── 📁 Frontend (React + TypeScript)
+│   ├── Dashboard components
+│   ├── Oregon MCP integration
+│   ├── Document analysis interface
+│   └── AI assistant chat
+├── 📁 Backend (Node.js + Express)
+│   ├── API routes and services
+│   ├── Oregon MCP monitoring
+│   ├── Document processing
+│   └── Database management
+├── 📁 AI Services (Python)
+│   ├── Document analysis engine
+│   ├── Compliance checking
+│   └── Natural language processing
+└── 📁 Documentation
+    ├── Setup guides
+    ├── API documentation
+    └── Integration guides
+```
 
-## 📋 Prerequisites
+## 🚀 Quick Start
+
+### Prerequisites
 
 - Node.js 18+ 
 - Python 3.9+
-- npm or yarn
-- Git
+- PostgreSQL (for production)
+- VPN connection for Oregon government access
 
-## 🛠️ Installation & Setup
+### Installation
 
-### 1. Clone the Repository
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/micheleparry/CiviAI-Enhanced.git
+   cd CiviAI-Enhanced
+   ```
 
-```bash
-git clone <repository-url>
-cd CiviAI_Enhanced_Complete_Package
-```
+2. **Install dependencies**
+   ```bash
+   # Install Node.js dependencies
+   npm install
+   
+   # Install Python dependencies
+   pip install -r requirements.txt
+   ```
 
-### 2. Install Dependencies
+3. **Configure environment**
+   ```bash
+   # Copy environment template
+   cp env.example .env
+   
+   # Configure Oregon MCP settings
+   cp env.oregon.example .env.oregon
+   ```
 
-```bash
-# Install Node.js dependencies
-npm install
+4. **Set up database**
+   ```bash
+   # Run Oregon MCP database setup
+   psql -f src/server/mcp/oregon-database.sql
+   ```
 
-# Install Python dependencies
-pip install -r requirements.txt
-```
+5. **Start the application**
+   ```bash
+   # Development mode
+   npm run dev
+   
+   # Production mode
+   npm run build
+   npm start
+   ```
 
-### 3. Environment Setup
+## 🌲 Oregon MCP Integration
 
-Create a `.env` file in the root directory:
+The Oregon MCP integration provides real-time access to:
 
-```env
-# Server Configuration
-PORT=5000
-NODE_ENV=development
+- **Statewide Planning Goals** - All 19 Oregon planning goals
+- **DLCD Updates** - Real-time monitoring of Oregon Department of Land Conservation and Development
+- **Compliance Monitoring** - Automated checking against current regulations
+- **Document Analysis** - AI-powered review of planning documents
 
-# Database (for production)
-DATABASE_URL=your_database_url_here
-
-# AI Services (optional)
-OPENAI_API_KEY=your_openai_key_here
-
-# Replit Configuration
-REPLIT_DOMAIN=your-replit-domain.replit.co
-```
-
-### 4. Development Setup
-
-```bash
-# Start development servers (frontend + backend)
-npm run dev
-
-# Or start individually:
-npm run dev:frontend  # Frontend on http://localhost:3000
-npm run dev:backend   # Backend on http://localhost:5000
-```
-
-### 5. Build for Production
-
-```bash
-# Build both frontend and backend
-npm run build
-
-# Start production server
-npm start
-```
-
-## 🚀 Replit Deployment
-
-### 1. Upload to Replit
-
-1. Create a new Replit project
-2. Upload all project files
-3. Replit will automatically detect the Node.js environment
-
-### 2. Configure Replit
-
-The project includes Replit-specific configuration files:
-- `.replit`: Defines run command and environment
-- `replit.nix`: Specifies required system dependencies
-
-### 3. Install Dependencies
-
-In the Replit shell:
+### Configuration
 
 ```bash
-# Install Node.js dependencies
-npm install
+# Set up Oregon MCP monitoring
+./setup-oregon-mcp.sh
 
-# Install Python dependencies
-pip install -r requirements.txt
+# Configure update frequency
+export OREGON_UPDATE_FREQUENCY=15m
+export OREGON_NOTIFICATION_EMAIL=your-email@example.com
 ```
 
-### 4. Run the Application
+## 📊 Dashboard Features
 
-Click the "Run" button or use the command:
+- **Real-time Statistics** - Application counts, completion rates, pending reviews
+- **Oregon Data Integration** - Live DLCD updates and compliance metrics
+- **Document Analysis** - AI-powered compliance checking
+- **Activity Feed** - Recent actions and system updates
+- **Quick Actions** - One-click document analysis and data updates
+
+## 🔧 Development
+
+### Project Structure
+
+```
+src/
+├── client/                 # React frontend
+│   ├── components/        # Reusable UI components
+│   ├── pages/            # Page components
+│   ├── hooks/            # Custom React hooks
+│   └── lib/              # Utility libraries
+├── server/               # Node.js backend
+│   ├── mcp/              # Oregon MCP integration
+│   ├── routes/           # API endpoints
+│   └── services/         # Business logic
+└── shared/               # Shared types and utilities
+```
+
+### Available Scripts
 
 ```bash
-npm run dev
+# Development
+npm run dev              # Start development server
+npm run build            # Build for production
+npm run preview          # Preview production build
+
+# Testing
+npm run test             # Run test suite
+npm run test:watch       # Run tests in watch mode
+npm run lint             # Run ESLint
+npm run type-check       # Run TypeScript checks
+
+# Oregon MCP
+npm run oregon:setup     # Set up Oregon MCP
+npm run oregon:monitor   # Start monitoring service
+npm run oregon:test      # Test Oregon MCP connection
 ```
-
-The application will be available at your Replit URL.
-
-## 📁 Project Structure
-
-```
-CiviAI_Enhanced_Complete_Package/
-├── src/
-│   ├── client/                 # React frontend
-│   │   ├── components/         # React components
-│   │   ├── pages/             # Page components
-│   │   ├── hooks/             # Custom React hooks
-│   │   ├── lib/               # Utility functions
-│   │   ├── App.tsx            # Main app component
-│   │   └── main.tsx           # React entry point
-│   ├── server/                # Node.js backend
-│   │   ├── enhanced_routes.ts # API routes
-│   │   ├── enhanced_document_analyzer.py # Python AI processor
-│   │   └── index.ts           # Server entry point
-│   └── shared/                # Shared types and utilities
-├── docs/                      # Documentation
-├── uploads/                   # File upload directory
-├── dist/                      # Build output
-├── package.json               # Node.js dependencies
-├── requirements.txt           # Python dependencies
-├── .replit                    # Replit configuration
-├── replit.nix                 # Replit system dependencies
-└── README.md                  # This file
-```
-
-## 🔧 Configuration
-
-### Frontend Configuration
-
-The frontend uses Vite with the following key configurations:
-
-- **Port**: 3000 (development)
-- **API Proxy**: Automatically proxies `/api` requests to backend
-- **Build Output**: `dist/client/`
-
-### Backend Configuration
-
-The backend uses Express with the following features:
-
-- **Port**: 5000 (configurable via PORT env var)
-- **CORS**: Configured for development and production
-- **File Uploads**: 10MB limit, supports PDF, DOC, DOCX, TXT, JPG, PNG
-- **Static Files**: Serves uploaded files from `/uploads` directory
-
-### AI Processing Configuration
-
-The Python document analyzer supports:
-
-- **Document Types**: PDF, DOCX, TXT, Images (with OCR)
-- **Analysis Features**: Text extraction, compliance checking, missing info detection
-- **NLP Models**: Lightweight alternatives compatible with Replit constraints
 
 ## 🧪 Testing
 
+### Automated Testing
+
+The project includes comprehensive testing:
+
+- **Unit Tests** - Component and service testing
+- **Integration Tests** - API endpoint testing
+- **E2E Tests** - Full application workflow testing
+- **Security Tests** - Vulnerability scanning and audit
+
+### Manual Testing
+
 ```bash
-# Run tests
-npm test
+# Test Oregon MCP connection
+python test-python.py
 
-# Run type checking
-npm run type-check
+# Test component rendering
+open test-components.html
 
-# Run linting
-npm run lint
+# Test enhanced demo
+open enhanced-demo.html
 ```
 
-## 📊 API Endpoints
+## 📚 Documentation
 
-### Authentication
-- `POST /api/auth/login` - User login
-- `POST /api/auth/logout` - User logout
-- `GET /api/auth/user` - Get current user
+- **[Setup Guide](setup.md)** - Complete installation instructions
+- **[Oregon MCP Setup](OREGON_MCP_SETUP_GUIDE.md)** - Oregon integration guide
+- **[Testing Guide](TESTING_GUIDE.md)** - Testing procedures and examples
+- **[API Documentation](API_DOCUMENTATION.md)** - Backend API reference
+- **[Troubleshooting](OREGON_MCP_DEBUGGING_GUIDE.md)** - Common issues and solutions
 
-### Documents
-- `POST /api/documents/upload` - Upload document
-- `GET /api/documents` - List user documents
-- `GET /api/documents/:id` - Get document details
-- `POST /api/documents/analyze-missing` - Analyze missing information
-- `POST /api/documents/submit-missing` - Submit missing information
+## 🔐 Security
 
-### Dashboard
-- `GET /api/dashboard/stats` - Get dashboard statistics
+- **VPN Integration** - Secure access to government resources
+- **Environment Variables** - Secure configuration management
+- **Input Validation** - Comprehensive data validation
+- **Security Audits** - Automated vulnerability scanning
+- **HTTPS Enforcement** - Secure communication protocols
 
-### Chat
-- `POST /api/chat/message` - Send chat message
+## 🌐 Deployment
 
-## 🔒 Security Features
+### GitHub Pages (Demo)
 
-- **Authentication**: Session-based authentication
-- **File Validation**: Type and size validation for uploads
-- **CORS**: Configured for specific origins
-- **Input Validation**: Comprehensive request validation
-- **Error Handling**: Secure error responses
+The project automatically deploys demos to GitHub Pages:
 
-## 🚀 Performance Optimizations
+- **Live Demo**: https://micheleparry.github.io/CiviAI-Enhanced/
+- **Auto-deployment** on every push to master
+- **Multiple demo environments** for different features
 
-- **Caching**: Intelligent caching for AI analysis results
-- **Compression**: Automatic response compression
-- **Lazy Loading**: Component and route lazy loading
-- **Image Optimization**: Automatic image optimization
-- **Bundle Splitting**: Efficient code splitting
+### Production Deployment
+
+```bash
+# Build for production
+npm run build
+
+# Deploy to your preferred platform
+# - Vercel
+# - Netlify
+# - AWS
+# - Azure
+# - Google Cloud
+```
 
 ## 🤝 Contributing
 
 1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests if applicable
-5. Submit a pull request
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🆘 Support
+## 🙏 Acknowledgments
 
-For support and questions:
+- **Oregon DLCD** - For providing access to planning data
+- **Model Context Protocol** - For enabling real-time data integration
+- **Rural Communities** - For inspiring this solution
+- **Open Source Community** - For the amazing tools and libraries
 
-- **Documentation**: Check the docs/ directory
-- **Issues**: Create an issue in the repository
-- **Email**: Contact the development team
+## 📞 Support
 
-## 🔄 Version History
-
-- **v2.0.0** (Current): Enhanced AI capabilities, MCP integration, improved UI
-- **v1.0.0**: Initial release with basic document analysis
-
-## 🎯 Roadmap
-
-- [ ] Advanced MCP integration
-- [ ] Mobile app development
-- [ ] Multi-language support
-- [ ] Advanced analytics dashboard
-- [ ] Integration with external planning systems
-- [ ] Machine learning model improvements
+- **Documentation**: [GitHub Wiki](https://github.com/micheleparry/CiviAI-Enhanced/wiki)
+- **Issues**: [GitHub Issues](https://github.com/micheleparry/CiviAI-Enhanced/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/micheleparry/CiviAI-Enhanced/discussions)
+- **Email**: mparry@shadycove.org
 
 ---
 
-**Built with ❤️ for rural communities** 
+**Built with ❤️ for rural communities and sustainable development** 
