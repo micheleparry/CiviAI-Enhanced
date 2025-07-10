@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CiviAI Enhanced - Component Test</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .forest-50 { background-color: #f0f9f4; }
+        .forest-100 { background-color: #dcf2e3; }
+        .forest-600 { background-color: #3d9b63; }
+        .forest-700 { background-color: #2f7c4f; }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        // Simple test of the LandingPage component
+        function LandingPage() {
+            return (
+                <div className="min-h-screen bg-gradient-to-br from-forest-50 to-forest-100">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                        <div className="text-center">
+                            <h1 className="text-4xl font-bold text-gray-900 mb-6">
+                                CiviAI Enhanced
+                            </h1>
+                            <p className="text-xl text-gray-600 mb-8">
+                                AI-Powered Planning & Permitting Management for Rural Communities
+                            </p>
+                            <div className="space-y-4">
+                                <button className="inline-block bg-forest-600 text-white px-8 py-3 rounded-lg font-medium hover:bg-forest-700 transition-colors">
+                                    Go to Dashboard
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
+                            <div className="bg-white p-6 rounded-lg shadow-sm">
+                                <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                                    Advanced Document Analysis
+                                </h3>
+                                <p className="text-gray-600">
+                                    AI-powered analysis of planning documents with compliance scoring and missing information detection.
+                                </p>
+                            </div>
+                            
+                            <div className="bg-white p-6 rounded-lg shadow-sm">
+                                <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                                    Conversational AI Assistant
+                                </h3>
+                                <p className="text-gray-600">
+                                    24/7 support for citizens and planning staff with intelligent guidance and answers.
+                                </p>
+                            </div>
+                            
+                            <div className="bg-white p-6 rounded-lg shadow-sm">
+                                <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                                    Rural Community Focus
+                                </h3>
+                                <p className="text-gray-600">
+                                    Designed specifically for small communities with limited resources and technical expertise.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        // Simple test of a dashboard card component
+        function DashboardCard({ title, value, description, icon }) {
+            return (
+                <div className="bg-white border border-gray-200 rounded-lg p-6">
+                    <div className="flex items-center justify-between mb-4">
+                        <h3 className="text-sm font-medium text-gray-600">{title}</h3>
+                        <span className="text-2xl">{icon}</span>
+                    </div>
+                    <div className="text-2xl font-bold text-gray-900 mb-1">{value}</div>
+                    <p className="text-xs text-gray-500">{description}</p>
+                </div>
+            );
+        }
+
+        // Main test component
+        function TestApp() {
+            const [activeTab, setActiveTab] = React.useState('landing');
+
+            return (
+                <div>
+                    <nav className="bg-white shadow-sm border-b border-gray-200 mb-8">
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                            <div className="flex justify-between items-center py-4">
+                                <h1 className="text-xl font-bold text-gray-900">CiviAI Enhanced - Test</h1>
+                                <div className="flex space-x-4">
+                                    <button 
+                                        onClick={() => setActiveTab('landing')}
+                                        className={`px-3 py-2 rounded ${activeTab === 'landing' ? 'bg-forest-600 text-white' : 'text-gray-600 hover:text-gray-900'}`}
+                                    >
+                                        Landing Page
+                                    </button>
+                                    <button 
+                                        onClick={() => setActiveTab('dashboard')}
+                                        className={`px-3 py-2 rounded ${activeTab === 'dashboard' ? 'bg-forest-600 text-white' : 'text-gray-600 hover:text-gray-900'}`}
+                                    >
+                                        Dashboard Cards
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+
+                    {activeTab === 'landing' && <LandingPage />}
+                    
+                    {activeTab === 'dashboard' && (
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                            <h2 className="text-2xl font-bold text-gray-900 mb-6">Dashboard Components Test</h2>
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                                <DashboardCard 
+                                    title="Total Applications"
+                                    value="12"
+                                    description="All time submissions"
+                                    icon="📄"
+                                />
+                                <DashboardCard 
+                                    title="Pending Review"
+                                    value="3"
+                                    description="Awaiting staff decision"
+                                    icon="⏳"
+                                />
+                                <DashboardCard 
+                                    title="Completion Rate"
+                                    value="85%"
+                                    description="Applications without missing info"
+                                    icon="📈"
+                                />
+                                <DashboardCard 
+                                    title="Missing Items"
+                                    value="7"
+                                    description="Across 3 applications"
+                                    icon="⚠️"
+                                />
+                            </div>
+                        </div>
+                    )}
+                </div>
+            );
+        }
+
+        ReactDOM.render(<TestApp />, document.getElementById('root'));
+    </script>
+</body>
+</html> 
