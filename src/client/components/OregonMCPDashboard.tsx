@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
 import { Badge } from './ui/badge';
@@ -176,9 +176,15 @@ export function OregonMCPDashboard() {
     );
   }
 
-  const pendingApplications = applications.filter(app => app.status === 'pending');
-  const approvedApplications = applications.filter(app => app.status === 'approved');
-  const highPriorityNotifications = notifications.filter(n => n.priority === 'high');
+  const pendingApplications = useMemo(() => 
+    applications.filter(app => app.status === 'pending'), [applications]
+  );
+  const approvedApplications = useMemo(() => 
+    applications.filter(app => app.status === 'approved'), [applications]
+  );
+  const highPriorityNotifications = useMemo(() => 
+    notifications.filter(n => n.priority === 'high'), [notifications]
+  );
 
   return (
     <div className="space-y-6">
@@ -417,4 +423,4 @@ export function OregonMCPDashboard() {
       )}
     </div>
   );
-} 
+}  
