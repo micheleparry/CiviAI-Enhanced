@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -134,13 +134,26 @@ export default function EnhancedDashboard() {
     }
   };
 
-  const filteredApplications = applications?.filter(app => {
-    const matchesSearch = app.originalName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         app.city.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         app.applicationType.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesStatus = statusFilter === "all" || app.status === statusFilter;
-    return matchesSearch && matchesStatus;
-  }) || [];
+  const averageComplianceScore = useMemo(() => {
+    if (!applications?.length) return 0;
+    return applications.reduce((acc, app) => acc + (app.complianceScore || 0), 0) / applications.length;
+  }, [applications]);
+
+  const totalCriticalIssues = useMemo(() => 
+    applications?.reduce((acc, app) => acc + (app.missingInfoSummary?.criticalMissing || 0), 0) || 0,
+    [applications]
+  );
+
+  const filteredApplications = useMemo(() => {
+    if (!applications) return [];
+    return applications.filter(app => {
+      const matchesSearch = app.originalName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                           app.city.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                           app.applicationType.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesStatus = statusFilter === "all" || app.status === statusFilter;
+      return matchesSearch && matchesStatus;
+    });
+  }, [applications, searchTerm, statusFilter]);
 
   if (statsLoading || appsLoading) {
     return (
@@ -351,7 +364,7 @@ export default function EnhancedDashboard() {
                     <div className="flex items-center justify-between">
                       <span className="text-sm text-gray-600">Average Compliance Score</span>
                       <span className="text-lg font-bold text-green-600">
-                        {applications?.reduce((acc, app) => acc + (app.complianceScore || 0), 0) / (applications?.length || 1) || 0}%
+                        {averageComplianceScore.toFixed(1)}%
                       </span>
                     </div>
                     <div className="flex items-center justify-between">
@@ -363,7 +376,7 @@ export default function EnhancedDashboard() {
                     <div className="flex items-center justify-between">
                       <span className="text-sm text-gray-600">Critical Issues</span>
                       <span className="text-lg font-bold text-red-600">
-                        {applications?.reduce((acc, app) => acc + (app.missingInfoSummary?.criticalMissing || 0), 0) || 0}
+                        {totalCriticalIssues}
                       </span>
                     </div>
                   </div>

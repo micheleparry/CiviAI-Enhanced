@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -133,9 +133,16 @@ export default function MissingInfoDetector({ documentId, onInfoSubmitted }: Mis
     }
   };
 
-  const criticalMissing = analysisData?.missingRequirements.filter(req => req.importance === 'critical') || [];
-  const importantMissing = analysisData?.missingRequirements.filter(req => req.importance === 'important') || [];
-  const recommendedMissing = analysisData?.missingRequirements.filter(req => req.importance === 'recommended') || [];
+  const { criticalMissing, importantMissing, recommendedMissing } = useMemo(() => {
+    if (!analysisData?.missingRequirements) {
+      return { criticalMissing: [], importantMissing: [], recommendedMissing: [] };
+    }
+    return {
+      criticalMissing: analysisData.missingRequirements.filter(req => req.importance === 'critical'),
+      importantMissing: analysisData.missingRequirements.filter(req => req.importance === 'important'),
+      recommendedMissing: analysisData.missingRequirements.filter(req => req.importance === 'recommended')
+    };
+  }, [analysisData?.missingRequirements]);
 
   if (isLoading) {
     return (
